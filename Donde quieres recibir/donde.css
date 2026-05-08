@@ -1,0 +1,32 @@
+.modal-content {
+    background: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,.1);
+}
+
+.form-control, .form-select {
+    height: 55px;
+    border-radius: 12px;
+}
+
+.btn-send {
+    background: linear-gradient(135deg,#6a11cb,#2575fc);
+    border: none;
+    padding: 15px;
+    width: 100%;
+    color: white;
+    font-weight: bold;
+    border-radius: 12px;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.btn-send:hover {
+    transform: translateY(-3px);
+    opacity: .9;
+}
+
+.payment-box {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 15px;
+}

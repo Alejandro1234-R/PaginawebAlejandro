@@ -31,7 +31,7 @@ vaciarCarritoBtn.addEventListener('click', () => {
 
 // Función para eliminar un producto del carrito
 function eliminarProducto(e) {
-    if (e.target.classList.contains("borrar-producto")) {
+    if (e.target.classList.contains("borrar-producto")) { 
         const id = e.target.getAttribute("data-id");
         // Buscar el producto en el carrito
         const producto = carritoArray.find(producto => producto.id == id);
