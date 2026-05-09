@@ -1,4 +1,4 @@
-* {
+modalEnvio* {
     margin: 0;
     padding: 0;
     text-decoration: none;
@@ -31,6 +31,18 @@ body {
     margin-top: 20px;
 }
 
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.button-group .btn {
+    flex: 1;
+    min-width: 150px;
+}
+
 
 .table {
     width: 100%;
@@ -49,11 +61,11 @@ body {
 
 
 #vaciar-carrito {
-    margin-bottom: 20px;
+    margin-bottom: 0;
 }
 
-
-#vaciar-carrito:hover{
+#vaciar-carrito:hover,
+#compra-ahora:hover {
     transform: translateY(2px);
     transition: 0.3s ease-in-out;
 }

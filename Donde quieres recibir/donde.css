@@ -1,32 +1,129 @@
+/* Modal Styles */
 .modal-content {
     background: white;
-    box-shadow: 0 10px 30px rgba(0,0,0,.1);
+    box-shadow: 0 10px 30px rgba(0,0,0,.15);
+    border: none;
 }
 
-.form-control, .form-select {
+.modal-header {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    border-radius: 20px 20px 0 0;
+    border: none;
+}
+
+.modal-header .modal-title {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.modal-header .btn-close {
+    filter: brightness(0) invert(1);
+}
+
+.modal-body {
+    padding: 2rem !important;
+}
+
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Form Controls */
+.form-control {
     height: 55px;
     border-radius: 12px;
+    border: 2px solid #e0e0e0;
+    font-size: 1rem;
+    padding: 12px 20px;
+    transition: all 0.3s ease;
 }
 
+.form-control:focus {
+    border-color: #6a11cb;
+    box-shadow: 0 0 10px rgba(106, 17, 203, 0.2);
+    height: 55px;
+}
+
+.form-control::placeholder {
+    color: #999;
+}
+
+.form-select {
+    height: 55px;
+    border-radius: 12px;
+    border: 2px solid #e0e0e0;
+    font-size: 1rem;
+    padding: 12px 20px;
+    transition: all 0.3s ease;
+}
+
+.form-select:focus {
+    border-color: #6a11cb;
+    box-shadow: 0 0 10px rgba(106, 17, 203, 0.2);
+}
+
+/* Payment Box */
+.payment-box {
+    background: linear-gradient(135deg, #f8f9fa, #f0f0f0);
+    padding: 25px;
+    border-radius: 15px;
+    border-left: 5px solid #6a11cb;
+}
+
+.payment-box h5 {
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.payment-box .form-select {
+    background-color: white;
+    border: 2px solid #e0e0e0;
+}
+
+/* Submit Button */
 .btn-send {
-    background: linear-gradient(135deg,#6a11cb,#2575fc);
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
     border: none;
-    padding: 15px;
+    padding: 15px 30px;
     width: 100%;
     color: white;
     font-weight: bold;
+    font-size: 1.1rem;
     border-radius: 12px;
-    transition: .3s;
+    transition: all 0.3s ease;
     cursor: pointer;
+    margin-top: 20px;
 }
 
 .btn-send:hover {
     transform: translateY(-3px);
-    opacity: .9;
+    opacity: 0.9;
+    box-shadow: 0 10px 20px rgba(106, 17, 203, 0.3);
 }
 
-.payment-box {
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 15px;
+.btn-send:active {
+    transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .modal-header .modal-title {
+        font-size: 1.2rem;
+    }
+    
+    .form-control, .form-select {
+        height: 50px;
+        font-size: 0.95rem;
+    }
+    
+    .payment-box {
+        padding: 15px;
+    }
+    
+    .btn-send {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
 }
