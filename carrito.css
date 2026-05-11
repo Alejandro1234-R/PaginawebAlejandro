@@ -36,11 +36,15 @@ body {
     gap: 10px;
     margin-bottom: 20px;
     flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
 .button-group .btn {
-    flex: 1;
+    flex: 0 0 auto;
     min-width: 150px;
+    max-width: 220px;
+    padding: 0.65rem 1rem;
+    font-size: 0.95rem;
 }
 
 
