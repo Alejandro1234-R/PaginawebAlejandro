@@ -74,7 +74,7 @@
         </div>
         <div class="modal-body p-4 pt-2">
           <p class="text-muted mb-4">Revisa las opciones de envío disponibles.</p>
-          
+
           <form id="shippingForm">
             <div class="row g-3">
               <div class="col-md-6">
@@ -90,17 +90,33 @@
                 <input type="tel" name="telefono" class="form-control" placeholder="Teléfono" required>
               </div>
               <div class="col-md-6">
-                <select name="departamento" class="form-select" required>
+               <select name="departamento" id="departamento" class="form-select" required>
                   <option selected disabled value="">Elige el departamento</option>
-                  <option>Cundinamarca</option>
-                  <option>Antioquia</option>
+
+                  <?php
+                  include "../conexion/conexion.php";
+
+                  $sql = "SELECT * FROM departamento";
+                  $result = $conn->query($sql);
+
+                    while ($row = $result->fetch_assoc()) {
+                      echo '<option value="'.$row['id'].'">'.$row['nombre_departamento'].'</option>';
+                    }
+                  ?>
                 </select>
               </div>
               <div class="col-md-6">
-                <select name="ciudad" class="form-select" required>
+                <select name="ciudad" id="ciudad" class="form-select" required>
                   <option selected disabled value="">Elige la ciudad</option>
-                  <option>Bogotá</option>
-                  <option>Medellín</option>
+                  <?php
+                  include "../conexion/conexion.php";
+                  $sql = "SELECT * FROM ciudades";
+                  $result = $conn->query($sql);
+                  while ($row = $result->fetch_assoc()) {
+                    echo '<option value="' . $row['nombre_ciudad'] . '">' . $row['nombre_ciudad'] . '</option>';
+                  }
+                  $conn->close();
+                  ?>
                 </select>
               </div>
               <div class="col-12">
@@ -132,14 +148,14 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="carrito.js"></script>
   <script>
-    $(document).ready(function () {
-      $('#shippingForm').on('submit', function (e) {
+    $(document).ready(function() {
+      $('#shippingForm').on('submit', function(e) {
         e.preventDefault();
-        
+
         var carrito = localStorage.getItem('carrito');
         if (!carrito || carrito === '[]') {
-            alert('El carrito está vacío. Agrega productos antes de comprar.');
-            return;
+          alert('El carrito está vacío. Agrega productos antes de comprar.');
+          return;
         }
 
         var formData = $(this).serialize();
@@ -151,12 +167,12 @@
           url: '../metodo de pago/procesar_pago.php',
           data: formData,
           dataType: 'json',
-          success: function (response) {
+          success: function(response) {
             if (response.status == 'success') {
               alert(response.message);
               $('#shippingForm')[0].reset();
               localStorage.removeItem('carrito'); // Limpiamos el carrito tras compra exitosa
-              
+
               var modalEl = document.getElementById('modalEnvio');
               var modal = bootstrap.Modal.getInstance(modalEl);
               modal.hide();
@@ -167,13 +183,38 @@
               alert(response.message);
             }
           },
-          error: function () {
+          error: function() {
             alert("Error al conectar con el servidor.");
           }
         });
       });
     });
+
+    //AJAX departamentos y ciudades
+    $(document).ready(function(){
+
+    $('#departamento').change(function(){
+
+        let id_departamento = $(this).val();
+
+        $.ajax({
+            url: 'obtener_ciudades.php',
+            type: 'POST',
+            data: {
+                id_departamento:id_departamento
+            },
+
+            success:function(data){
+                $('#ciudad').html(data);
+            }
+        });
+
+    });
+
+})
   </script>
+
+  
 </body>
 
 </html>
