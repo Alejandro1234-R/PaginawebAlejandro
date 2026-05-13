@@ -14,20 +14,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Evento para agregar productos al carrito
 document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('btn-add-to-cart')) {
-        const agregaProducto = e.target;
-        leerDatos(agregaProducto);
+    const addBtn = e.target.closest('.btn-add-to-cart');
+    if (addBtn) {
+        leerDatos(addBtn);
     }
 });
 
 // Evento para eliminar productos del carrito
-contenedorCarrito.addEventListener("click", eliminarProducto);
+if (contenedorCarrito) {
+    contenedorCarrito.addEventListener("click", eliminarProducto);
+}
 
 // Evento para vaciar el carrito
-vaciarCarritoBtn.addEventListener('click', () => {
-    carritoArray = [];
-    actualizarCarrito();
-});
+if (vaciarCarritoBtn) {
+    vaciarCarritoBtn.addEventListener('click', () => {
+        carritoArray = [];
+        actualizarCarrito();
+    });
+}
 
 // Función para eliminar un producto del carrito
 function eliminarProducto(e) {
@@ -49,12 +53,16 @@ function eliminarProducto(e) {
 
 // Función para leer los datos del producto
 function leerDatos(agregaProducto) {
-    const color = document.getElementById('colour').value; // Obtener el color seleccionado
-    const size = document.getElementById('size').value; // Obtener la talla seleccionada
-    const cantidad = parseInt(document.querySelector('.input-quantity').value); // Obtener la cantidad seleccionada
+    const colorElement = document.getElementById('colour');
+    const sizeElement = document.getElementById('size');
+    const cantidadElement = document.querySelector('.input-quantity');
+    
+    const color = colorElement ? colorElement.value : ''; // Obtener el color seleccionado
+    const size = sizeElement ? sizeElement.value : ''; // Obtener la talla seleccionada
+    const cantidad = cantidadElement ? parseInt(cantidadElement.value) : 1; // Obtener la cantidad seleccionada
 
     // Verificar si la talla está seleccionada
-    if (!size) {
+    if (sizeElement && !size) {
         alert("Por favor, selecciona una opción."); // Alerta si no se selecciona talla
         return; // Salir de la función si no hay talla
     }
@@ -95,19 +103,21 @@ function mostrarMensajeConfirmacion() {
 // Función para actualizar el HTML del carrito
 function actualizarCarrito() {
     limpiarHtml();
-    carritoArray.forEach(producto => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td><img src="${producto.imagen}" width="50"></td>
-            <td>${producto.nombre}</td>
-            <td>${producto.precio}</td>
-            <td>${producto.cantidad}</td>
-            <td>${producto.color}</td> <!-- Mostrar color -->
-            <td>${producto.size}</td> <!-- Mostrar talla -->
-            <td><button class="borrar-producto btn btn-danger" data-id="${producto.id}">Eliminar</button></td>
-        `;
-        contenedorCarrito.appendChild(row);
-    });
+    if (contenedorCarrito) {
+        carritoArray.forEach(producto => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><img src="${producto.imagen}" width="50"></td>
+                <td>${producto.nombre}</td>
+                <td>${producto.precio}</td>
+                <td>${producto.cantidad}</td>
+                <td>${producto.color || ''}</td> <!-- Mostrar color -->
+                <td>${producto.size || ''}</td> <!-- Mostrar talla -->
+                <td><button class="borrar-producto btn btn-danger" data-id="${producto.id}">Eliminar</button></td>
+            `;
+            contenedorCarrito.appendChild(row);
+        });
+    }
 
     sincronizarStorage();
 }
@@ -119,36 +129,53 @@ function sincronizarStorage() {
 
 // Función para limpiar el HTML del carrito
 function limpiarHtml() {
-    contenedorCarrito.innerHTML = "";
+    if (contenedorCarrito) {
+        contenedorCarrito.innerHTML = "";
+    }
 }
 
 // Evento para mostrar/ocultar el carrito
-carritoBtn.addEventListener('click', () => {
-    // Ocultar el contenido principal
-    contenidoPrincipal.style.display = 'none';
-    // Mostrar el carrito
-    carrito.style.display = 'block';
-});
+if (carritoBtn) {
+    carritoBtn.addEventListener('click', () => {
+        // Ocultar el contenido principal
+        if (contenidoPrincipal) contenidoPrincipal.style.display = 'none';
+        // Mostrar el carrito
+        if (carrito) carrito.style.display = 'block';
+    });
+}
 
 // Agregar un evento para volver al contenido principal
-document.getElementById('volver').addEventListener('click', () => {
-    // Mostrar el contenido principal
-    contenidoPrincipal.style.display = 'block';
-    // Ocultar el carrito
-    carrito.style.display = 'none';
-});
+const volverBtn = document.getElementById('volver');
+if (volverBtn) {
+    volverBtn.addEventListener('click', () => {
+        // Mostrar el contenido principal
+        if (contenidoPrincipal) contenidoPrincipal.style.display = 'block';
+        // Ocultar el carrito
+        if (carrito) carrito.style.display = 'none';
+    });
+}
 
 // Incrementar y decrementar la cantidad
-document.querySelector('.btn-increment').addEventListener('click', () => {
-    const inputCantidad = document.querySelector('.input-quantity');
-    let cantidadActual = parseInt(inputCantidad.value);
-    inputCantidad.value = cantidadActual + 1; // Incrementar la cantidad
-});
+const btnIncrement = document.querySelector('.btn-increment');
+if (btnIncrement) {
+    btnIncrement.addEventListener('click', () => {
+        const inputCantidad = document.querySelector('.input-quantity');
+        if (inputCantidad) {
+            let cantidadActual = parseInt(inputCantidad.value);
+            inputCantidad.value = cantidadActual + 1; // Incrementar la cantidad
+        }
+    });
+}
 
-document.querySelector('.btn-decrement').addEventListener('click', () => {
-    const inputCantidad = document.querySelector('.input-quantity');
-    let cantidadActual = parseInt(inputCantidad.value);
-    if (cantidadActual > 1) {
-        inputCantidad.value = cantidadActual - 1; // Decrementar la cantidad
-    }
-});
+const btnDecrement = document.querySelector('.btn-decrement');
+if (btnDecrement) {
+    btnDecrement.addEventListener('click', () => {
+        const inputCantidad = document.querySelector('.input-quantity');
+        if (inputCantidad) {
+            let cantidadActual = parseInt(inputCantidad.value);
+            if (cantidadActual > 1) {
+                inputCantidad.value = cantidadActual - 1; // Decrementar la cantidad
+            }
+        }
+    });
+}
