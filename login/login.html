@@ -30,21 +30,23 @@
   </nav>
   <div class="container">
     <h1>Inicia Sesión</h1>
-    <div class="form-group">
-      <label for="correo">Correo electronico</label>
-      <input type="email" id="correo" class="controls" name="correo">
-    </div>
-    <div class="form-group">
-      <label for="contraseña">Contraseña</label>
-      <input type="password" id="contraseña" class="controls" name="contraseña">
-      <button type="submit">Ingresar</button>
-    </div>
+    <form method="POST" action="login.php">
+      <div class="form-group">
+        <label for="correo">Correo electrónico</label>
+        <input type="email" id="correo" class="controls" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="contraseña">Contraseña</label>
+        <input type="password" id="contraseña" class="controls" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Ingresar</button>
+    </form>
     <label>
       <input type="checkbox">
       ¿Recordar contraseña?
     </label>
     <label>
-      <a href="../registro/registro.html">Registrarse</a>
+      <a href="../registro/registro.php">Registrarse</a>
     </label>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
