@@ -5,6 +5,21 @@ const vaciarCarritoBtn = document.getElementById('vaciar-carrito');
 const mensajeConfirmacion = document.getElementById('mensaje-confirmacion');
 const contenidoPrincipal = document.querySelector('main'); // Seleccionamos el contenido principal
 let carritoArray = [];
+let usuarioLogueado = false;
+
+const carritoScript = document.querySelector('script[src$="Carrito/carrito.js"], script[src$="carrito.js"]');
+const carritoScriptUrl = carritoScript ? carritoScript.src : window.location.href;
+const authStatusUrl = new URL('../login/auth_status.php', carritoScriptUrl).href;
+const loginUrl = new URL('../login/login.php', carritoScriptUrl).href;
+
+const estadoSesion = fetch(authStatusUrl)
+    .then(response => response.json())
+    .then(data => {
+        usuarioLogueado = data.loggedIn === true;
+    })
+    .catch(() => {
+        usuarioLogueado = false;
+    });
 
 // Cargar carrito desde localStorage
 document.addEventListener("DOMContentLoaded", () => {
@@ -13,9 +28,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Evento para agregar productos al carrito
-document.addEventListener('click', (e) => {
+document.addEventListener('click', async (e) => {
     const addBtn = e.target.closest('.btn-add-to-cart');
     if (addBtn) {
+        await estadoSesion;
+
+        if (!usuarioLogueado) {
+            window.location.href = loginUrl;
+            return;
+        }
+
         leerDatos(addBtn);
     }
 });

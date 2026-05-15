@@ -2,6 +2,28 @@
 // Ajustamos la ruta para que encuentre conexion.php asumiendo que está un nivel arriba
 include "../conexion/conexion.php";
 
+function buscarValorPorId($conn, $tabla, $columnaNombre, $id)
+{
+    if ($id === '' || !ctype_digit((string) $id)) {
+        return $id;
+    }
+
+    $sql = "SELECT $columnaNombre FROM $tabla WHERE id = ? LIMIT 1";
+    $stmt = $conn->prepare($sql);
+
+    if (!$stmt) {
+        return $id;
+    }
+
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->bind_result($nombre);
+    $stmt->fetch();
+    $stmt->close();
+
+    return $nombre ?: $id;
+}
+
 // Verificamos que sea una petición POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -14,6 +36,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ciudad = trim($_POST['ciudad'] ?? '');
     $direccion = trim($_POST['direccion'] ?? '');
     $metodo_pago = trim($_POST['metodo_pago'] ?? '');
+
+    $departamento = buscarValorPorId($conn, 'departamento', 'nombre_departamento', $departamento);
+    $ciudad = buscarValorPorId($conn, 'ciudades', 'nombre_ciudad', $ciudad);
 
     // Recibir los datos del carrito (en formato JSON)
     $carrito_datos = $_POST['carrito_datos'] ?? '[]';

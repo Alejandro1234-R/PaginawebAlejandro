@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../login/login.php');
+    exit;
+}
+
+$userName = htmlspecialchars($_SESSION['user_name'] ?? 'Usuario');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,10 +34,13 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" href="../login/login.html">Iniciar sesión</a>
+            <span class="nav-link"><i class="fa-solid fa-user"></i> <?= $userName ?></span>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../index.html">Volver a la tienda</a>
+            <a class="nav-link" href="../login/logout.php">Cerrar sesión</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../index.php">Volver a la tienda</a>
           </li>
         </ul>
       </div>
@@ -214,7 +227,6 @@
 })
   </script>
 
-  
 </body>
 
 </html>
