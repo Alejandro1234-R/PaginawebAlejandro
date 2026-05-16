@@ -9,6 +9,7 @@ let usuarioLogueado = false;
 
 const carritoScript = document.querySelector('script[src$="Carrito/carrito.js"], script[src$="carrito.js"]');
 const carritoScriptUrl = carritoScript ? carritoScript.src : window.location.href;
+const appRootUrl = new URL('../', carritoScriptUrl);
 const authStatusUrl = new URL('../login/auth_status.php', carritoScriptUrl).href;
 const loginUrl = new URL('../login/login.php', carritoScriptUrl).href;
 
@@ -114,6 +115,22 @@ function leerDatos(agregaProducto) {
     mostrarMensajeConfirmacion(); // Mostrar mensaje de confirmación
 }
 
+function obtenerSrcImagen(imagen) {
+    if (!imagen) return '';
+
+    const ruta = imagen.replace(/\\/g, '/').trim();
+
+    if (/^(https?:|data:|blob:)/i.test(ruta)) {
+        return ruta;
+    }
+
+    if (ruta.startsWith('../')) {
+        return new URL(ruta, window.location.href).href;
+    }
+
+    return new URL(ruta.replace(/^\.?\//, ''), appRootUrl).href;
+}
+
 // Función para mostrar el mensaje de confirmación
 function mostrarMensajeConfirmacion() {
     mensajeConfirmacion.style.display = 'block'; // Mostrar el mensaje
@@ -128,8 +145,9 @@ function actualizarCarrito() {
     if (contenedorCarrito) {
         carritoArray.forEach(producto => {
             const row = document.createElement('tr');
+            const imagenSrc = obtenerSrcImagen(producto.imagen);
             row.innerHTML = `
-                <td><img src="${producto.imagen}" width="50"></td>
+                <td><img src="${imagenSrc}" alt="${producto.nombre}" class="cart-product-img"></td>
                 <td>${producto.nombre}</td>
                 <td>${producto.precio}</td>
                 <td>${producto.cantidad}</td>

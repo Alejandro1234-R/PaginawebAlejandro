@@ -13,7 +13,7 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
     <div class="container-fluid">
-      <img src="/imagenes/img/Nombre_tienda_virtual-transformed.jpeg" width="40%" height="70px"
+      <img src="../imagenes/img/Nombre_tienda_virtual-transformed.jpeg" width="40%" height="70px"
         style="display: flex; margin: auto;">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
         <span class="navbar-toggler-icon"></span>
@@ -21,10 +21,10 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" href="../index.html">Inicio</a>
+            <a class="nav-link" href="../index.php">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../login/login.html">Iniciar sesión</a>
+            <a class="nav-link" href="../login/login.php">Iniciar sesión</a>
           </li>
         </ul>
       </div>
@@ -33,7 +33,7 @@
   <section class="contact-section" aria-label="Formulario de contacto">
     <h1>Contáctanos</h1>
     <p  class="text-flex fs-5 mb-4">¿Tienes dudas sobre tu pedido, tallas o envíos? Estamos aquí para ayudarte.</p>
-    <form class="contact-form" action="#" method="POST" autocomplete="off" novalidate>
+    <form class="contact-form" action="enviar_contacto.php" method="POST" autocomplete="off">
       <input type="text" name="nombre" placeholder="Nombre" required />
       <input type="email" name="correo" placeholder="Correo electrónico" required />
       <input type="tel" name="telefono" placeholder="Teléfono" />

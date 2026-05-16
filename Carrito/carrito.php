@@ -26,7 +26,7 @@ $userName = htmlspecialchars($_SESSION['user_name'] ?? 'Usuario');
   <!--Menu de navegacion-->
   <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
-      <img src="./imagenes/img/Nombre_tienda_virtual-transformed.jpeg" width="40%" height="70px"
+      <img src="../imagenes/img/Nombre_tienda_virtual-transformed.jpeg" width="40%" height="70px"
         style="display: flex; margin: auto;">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
         <span class="navbar-toggler-icon"></span>

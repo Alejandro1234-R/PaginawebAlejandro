@@ -59,6 +59,13 @@ body {
     height: auto;
 }
 
+.table img.cart-product-img {
+    width: 58px;
+    height: 58px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
 .vaciar-carrito {
     margin-bottom: 20px;
 }
